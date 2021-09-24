@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.user.brayan.eltiempo.api.ApplicationApi
 import com.user.brayan.eltiempo.db.ConnectionDb
-import com.user.brayan.eltiempo.db.NoticeDao
+import com.user.brayan.eltiempo.db.NewsDao
 import com.user.brayan.eltiempo.utils.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -34,7 +34,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideUserDao(db: ConnectionDb): NoticeDao {
+    fun provideNewsDao(db: ConnectionDb): NewsDao {
         return db.noticeDao()
     }
 }

@@ -5,11 +5,13 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.google.gson.JsonObject
 import com.user.brayan.eltiempo.AppExecutors
 import com.user.brayan.eltiempo.api.ApiEmptyResponse
 import com.user.brayan.eltiempo.api.ApiErrorResponse
 import com.user.brayan.eltiempo.api.ApiResponse
 import com.user.brayan.eltiempo.api.ApiSuccessResponse
+import org.json.JSONObject
 
 abstract class NetworkBoundResource <ResultType, RequestType>
 @MainThread constructor(private val appExecutors: AppExecutors) {
@@ -40,37 +42,39 @@ abstract class NetworkBoundResource <ResultType, RequestType>
 
     @MainThread
     private fun fetchFromNetwork(dbSource: LiveData<ResultType>) {
-        val apiResponse: LiveData<ApiResponse<RequestType>> = createCall()
-        result.addSource(dbSource) { newData ->
-            setValue(Resource.loading(newData))
-        }
-        result.addSource(apiResponse) { response ->
-            result.removeSource(apiResponse)
-            result.removeSource(dbSource)
-            when(response) {
-                is ApiSuccessResponse -> {
-                    appExecutors.diskIo.execute {
-                        saveCallResult(processResponse(response))
-                        appExecutors.mainThread().execute {
+        if (createCall() != null) {
+            val apiResponse: LiveData<ApiResponse<JsonObject>> = createCall()!!
+            result.addSource(dbSource) { newData ->
+                setValue(Resource.loading(newData))
+            }
+            result.addSource(apiResponse) { response ->
+                result.removeSource(apiResponse)
+                result.removeSource(dbSource)
+                when(response) {
+                    is ApiSuccessResponse -> {
+                        appExecutors.diskIo.execute {
+                            saveCallResult(processResponse(response))
+                            appExecutors.mainThread().execute {
+                                result.addSource(loadFromDataBase()) { newData ->
+                                    setValue(Resource.success(newData))
+                                }
+                            }
+                        }
+                    }
+
+                    is ApiEmptyResponse -> {
+                        appExecutors.mainThread.execute {
                             result.addSource(loadFromDataBase()) { newData ->
                                 setValue(Resource.success(newData))
                             }
                         }
                     }
-                }
 
-                is ApiEmptyResponse -> {
-                    appExecutors.mainThread.execute {
-                        result.addSource(loadFromDataBase()) { newData ->
-                            setValue(Resource.success(newData))
+                    is ApiErrorResponse -> {
+                        onFetchFailed()
+                        result.addSource(dbSource) { newData ->
+                            setValue(Resource.error(newData, response.errorMessage))
                         }
-                    }
-                }
-
-                is ApiErrorResponse -> {
-                    onFetchFailed()
-                    result.addSource(dbSource) { newData ->
-                        setValue(Resource.error(newData, response.errorMessage))
                     }
                 }
             }
@@ -89,14 +93,14 @@ abstract class NetworkBoundResource <ResultType, RequestType>
     fun asLiveData() = result as LiveData<Resource<ResultType>>
 
     @WorkerThread
-    protected open fun processResponse(response: ApiSuccessResponse<RequestType>) = response.body
+    protected open fun processResponse(response: ApiSuccessResponse<JsonObject>) = response.body
 
     @WorkerThread
-    protected abstract fun saveCallResult(item: RequestType)
+    protected abstract fun saveCallResult(item: JsonObject)
 
     @WorkerThread
-    protected abstract fun favorite(item: ResultType)
+    protected abstract fun favorite(favorite: Boolean)
 
     @MainThread
-    protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>
+    protected abstract fun createCall(): LiveData<ApiResponse<JsonObject>>?
 }

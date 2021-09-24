@@ -7,9 +7,16 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.user.brayan.eltiempo.db.AppTypeConverter
 
-@Entity
-@TypeConverters(AppTypeConverter::class)
-data class KeyWords(
+data class NewsLinksDataCollections(
+    @SerializedName("rel")
     @Expose
-    val name: String
+    val rel: String?,
+
+    @SerializedName("render")
+    @Expose
+    val render: String?,
+
+    @SerializedName("href")
+    @Expose
+    val href: String?
 )

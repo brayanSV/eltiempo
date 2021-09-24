@@ -8,7 +8,7 @@ import androidx.room.Query
 import com.user.brayan.eltiempo.model.News
 
 @Dao
-abstract class NoticeDao {
+abstract class NewsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(item: List<News>)
 
@@ -21,6 +21,6 @@ abstract class NoticeDao {
     @Query("select * from news where nasaId = :nasa_id")
     abstract fun loadDetailData(nasa_id: String): LiveData<News>
 
-    @Query("select * from news where nasa_id_name like '%'|:query|'%'")
+    @Query("select * from news where nasaId_name like '%'|:query|'%'")
     abstract fun searchData(query: String): LiveData<List<News>>?
 }

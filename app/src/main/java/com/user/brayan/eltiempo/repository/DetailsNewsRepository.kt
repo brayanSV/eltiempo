@@ -3,35 +3,30 @@ package com.user.brayan.eltiempo.repository
 import androidx.lifecycle.LiveData
 import com.user.brayan.eltiempo.AppExecutors
 import com.user.brayan.eltiempo.api.ApiResponse
-import com.user.brayan.eltiempo.db.ConnectionDb
-import com.user.brayan.eltiempo.db.NoticeDao
+import com.user.brayan.eltiempo.db.NewsDao
 import com.user.brayan.eltiempo.model.News
 import javax.inject.Inject
 
 class DetailsNewsRepository @Inject constructor(
     private val appExecutors: AppExecutors,
-    private val connectionDb: ConnectionDb,
-    private val noticeDao: NoticeDao,
+    private val newsDao: NewsDao
 ) {
-    fun loadDetails(nasaId: String): LiveData<Resource<News>> = object: NetworkBoundResource<News, News>(appExecutors) {
+    /*fun loadDetails(nasaId: String): LiveData<Resource<News>> = object: NetworkBoundResource<News, News>(appExecutors) {
         override fun loadFromDataBase(): LiveData<News> {
-            return noticeDao.loadDetailData(nasaId)
+            return newsDao.loadDetailData(nasaId)
         }
 
-        override fun shouldFetch(data: News?): Boolean {
-            TODO("Not yet implemented")
+        override fun shouldFetch(data: News?): Boolean = data == null
+
+        override fun saveCallResult(item: News) {}
+
+        override fun favorite(favorite: Boolean) {
+            newsDao.updateFavorite(favorite, nasaId)
         }
 
-        override fun saveCallResult(item: News) {
-            TODO("Not yet implemented")
+        override fun createCall(): LiveData<ApiResponse<News>>? {
+            return null
         }
 
-        override fun favorite(item: News) {
-            TODO("Not yet implemented")
-        }
-
-        override fun createCall(): LiveData<ApiResponse<News>> {
-            TODO("Not yet implemented")
-        }
-    }.asLiveData()
+    }.asLiveData()*/
 }

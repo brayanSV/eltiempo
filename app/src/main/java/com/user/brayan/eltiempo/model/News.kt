@@ -7,23 +7,24 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(
         indices = [
-                Index("nasa_id"),
-                Index("keyWords_name")
+                Index("nasaId"),
+                Index("nasaId_name")
         ],
         primaryKeys = [
                 "nasaId",
-                "nasa_id_name"
-        ])
-data class News (
+                "nasaId_name"
+        ]
+)
+data class News(
         @field:SerializedName("nasa_id")
         val nasaId: String,
-        @field:SerializedName("items/links/0/href")
+        @field:SerializedName("href")
         val photo: String,
         @field:SerializedName("title")
         val title: String,
         @field:SerializedName("description")
         val description: String,
-        @field:Embedded(prefix = "nasa_id_")
+        @field:Embedded(prefix = "nasaId_")
         @field:SerializedName("keywords")
         val keyWords: KeyWords,
         val favorite: Boolean
