@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.user.brayan.eltiempo.model.News
+import com.user.brayan.eltiempo.model.NewsCollections
 import com.user.brayan.eltiempo.repository.NewsRepository
 import com.user.brayan.eltiempo.repository.Resource
 import java.util.*

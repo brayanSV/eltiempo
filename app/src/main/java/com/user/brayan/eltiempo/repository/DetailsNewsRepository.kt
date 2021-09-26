@@ -1,10 +1,7 @@
 package com.user.brayan.eltiempo.repository
 
-import androidx.lifecycle.LiveData
 import com.user.brayan.eltiempo.AppExecutors
-import com.user.brayan.eltiempo.api.ApiResponse
 import com.user.brayan.eltiempo.db.NewsDao
-import com.user.brayan.eltiempo.model.News
 import javax.inject.Inject
 
 class DetailsNewsRepository @Inject constructor(

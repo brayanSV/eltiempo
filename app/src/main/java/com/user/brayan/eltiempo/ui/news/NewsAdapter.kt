@@ -9,6 +9,7 @@ import com.user.brayan.eltiempo.AppExecutors
 import com.user.brayan.eltiempo.R
 import com.user.brayan.eltiempo.databinding.NewsItemBinding
 import com.user.brayan.eltiempo.model.News
+import com.user.brayan.eltiempo.model.NewsCollections
 import com.user.brayan.eltiempo.ui.common.DataBoundListAdapter
 
 class NewsAdapter (
@@ -19,11 +20,11 @@ class NewsAdapter (
     appExecutors = appExecutors,
     diffCallback = object : DiffUtil.ItemCallback<News>() {
         override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
-            return oldItem.nasaId == newItem.nasaId
+            return oldItem.data.nasaId == newItem.data.nasaId
         }
 
         override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
-            return oldItem.nasaId == newItem.nasaId && oldItem.title == newItem.title && oldItem.description == newItem.description
+            return oldItem.data.nasaId == newItem.data.nasaId && oldItem.data.title == newItem.data.title
         }
     }
 ) {

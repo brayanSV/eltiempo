@@ -55,7 +55,7 @@ class NoticeFragment : Fragment(), Injectable {
         initRecyclerView()
     }
 
-    fun initRecyclerView() {
+    private fun initRecyclerView() {
         val rvAdapter = NewsAdapter(
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
@@ -82,7 +82,7 @@ class NoticeFragment : Fragment(), Injectable {
     private fun initAccountsList(viewModel: NewsViewModel) {
         viewModel.repositories.observe(viewLifecycleOwner, Observer { listResource ->
             if(listResource?.data != null) {
-                //adapter.submitList(listResource.data)
+                adapter.submitList(listResource.data)
             } else {
                 adapter.submitList(emptyList())
             }
