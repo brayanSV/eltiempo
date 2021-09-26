@@ -3,7 +3,6 @@ package com.user.brayan.eltiempo.ui.news
 import android.content.Context
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -27,7 +27,7 @@ import com.user.brayan.eltiempo.view_model.AppViewModelFactory
 import javax.inject.Inject
 
 
-class NoticeFragment : Fragment(), Injectable {
+class NewsFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: AppViewModelFactory
 
@@ -52,34 +52,43 @@ class NoticeFragment : Fragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.lifecycleOwner = viewLifecycleOwner
+        initSearchView()
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
         val rvAdapter = NewsAdapter(
             dataBindingComponent = dataBindingComponent,
-            appExecutors = appExecutors
-        ) { repo ->
-             /*findNavController().navigate(
-                 NewsFragmentDirections.actionSearchFragmentToRepoFragment(repo.name, repo.owner.login)
-             )*/
+            appExecutors = appExecutors,
+            viewModel = newsViewModel
+        ) { news ->
+             findNavController().navigate(
+                NewsFragmentDirections.actionNewsFragmentToDetailsNewsFragment(news.data.nasaId)
+             )
         }
 
         binding.query = newsViewModel.queryLD
-        binding.repoList.adapter = rvAdapter
+        binding.newsList.adapter = rvAdapter
         adapter = rvAdapter
 
         initSearchInputListener()
+        initNewsList(newsViewModel)
+
         binding.callback = object: RetryCallback {
             override fun retry() {
                 newsViewModel.refresh()
             }
         }
-
-        initAccountsList(newsViewModel)
     }
 
-    private fun initAccountsList(viewModel: NewsViewModel) {
+    private fun initSearchView() {
+        binding.searchResult = newsViewModel.result
+        newsViewModel.result.observe(viewLifecycleOwner, Observer { result ->
+            adapter.submitList(result?.data)
+        })
+    }
+
+    private fun initNewsList(viewModel: NewsViewModel) {
         viewModel.repositories.observe(viewLifecycleOwner, Observer { listResource ->
             if(listResource?.data != null) {
                 adapter.submitList(listResource.data)

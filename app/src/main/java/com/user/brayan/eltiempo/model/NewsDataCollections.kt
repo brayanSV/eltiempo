@@ -18,7 +18,7 @@ data class NewsDataCollections(
 
     @SerializedName("keywords")
     @Expose
-    val keywords: List<String>,
+    val keywords: List<String>?,
 
     @SerializedName("center")
     @Expose

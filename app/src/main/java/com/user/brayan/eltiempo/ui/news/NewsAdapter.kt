@@ -1,20 +1,29 @@
 package com.user.brayan.eltiempo.ui.news
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import com.user.brayan.eltiempo.AppExecutors
 import com.user.brayan.eltiempo.R
 import com.user.brayan.eltiempo.databinding.NewsItemBinding
+import com.user.brayan.eltiempo.db.NewsDao
 import com.user.brayan.eltiempo.model.News
 import com.user.brayan.eltiempo.model.NewsCollections
 import com.user.brayan.eltiempo.ui.common.DataBoundListAdapter
+import com.user.brayan.eltiempo.ui.common.FavoriteCallback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NewsAdapter (
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
+    private val viewModel: NewsViewModel,
     private val callback: ((News) -> Unit)?
 ): DataBoundListAdapter<News, NewsItemBinding> (
     appExecutors = appExecutors,
@@ -48,6 +57,14 @@ class NewsAdapter (
 
     override fun bind(binding: NewsItemBinding, item: News) {
         binding.news = item
-    }
+        binding.favorite = item.data.favorite
 
+        binding.favoriteCallback = object: FavoriteCallback {
+            override fun favorite() {
+                binding.favorite = !item.data.favorite
+                viewModel.favorite(!item.data.favorite, item.data.nasaId)
+                binding.notifyChange()
+            }
+        }
+    }
 }

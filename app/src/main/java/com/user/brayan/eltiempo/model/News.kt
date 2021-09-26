@@ -60,19 +60,6 @@ data class News(
         val photo: String,
 
         @Expose
-        val favorite: Boolean
+        var favorite: Boolean
     )
-
-    companion object {
-        const val UNKOWN_ID = -1
-    }
-
-    /*@SerializedName("links")
-    @Expose
-    var links: List<NewsLinksDataCollections>,
-
-    @SerializedName("href")
-    @Expose
-    var href: String?,*/
-
 }

@@ -1,5 +1,6 @@
 package com.user.brayan.eltiempo.utils
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.user.brayan.eltiempo.api.ApiResponse
 import retrofit2.CallAdapter

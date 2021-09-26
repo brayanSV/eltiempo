@@ -9,6 +9,6 @@ interface ApplicationApi {
     @GET("search?q=apollo%2011")
     fun loadNoticesDefault(): LiveData<ApiResponse<JsonObject>>
 
-    @GET("search/")
+    @GET("search")
     fun searchRepos(@Query("q") query: String): LiveData<ApiResponse<JsonObject>>
 }

@@ -21,8 +21,6 @@ class ConvertJsonToData  {
             var linkPhoto = ""
 
             it.links?.forEach { photo ->
-                Log.e("daots", "$photo")
-
                 if (photo.rel != null && photo.rel.isNotEmpty()) {
                     if (photo.rel == "preview" && photo.href != null ) {
                         linkPhoto = photo.href
@@ -31,27 +29,31 @@ class ConvertJsonToData  {
                 }
             }
 
+            if (!it.data.isNullOrEmpty()) {
+                var listKeyWord: List<String> = listOf()
 
+                if (it.data[0].keywords != null) {
+                    listKeyWord = it.data[0].keywords!!
+                }
 
-            list.add(
-                News(
-                    href = it.href!!,
-                    data = News.DataItemsNews(
-                        dateCreated = it.data[0].dateCreated,
-                        description = it.data[0].description,
-                        nasaId = it.data[0].nasaId,
-                        keywords = it.data[0].keywords,
-                        center = it.data[0].center,
-                        title = it.data[0].title,
-                        mediaType = it.data[0].mediaType,
-                        photo = linkPhoto,
-                        favorite = false
+                list.add(
+                    News(
+                        href = it.href!!,
+                        data = News.DataItemsNews(
+                            dateCreated = it.data[0].dateCreated,
+                            description = it.data[0].description,
+                            nasaId = it.data[0].nasaId,
+                            keywords = listKeyWord,
+                            center = it.data[0].center,
+                            title = it.data[0].title,
+                            mediaType = it.data[0].mediaType,
+                            photo = linkPhoto,
+                            favorite = false
+                        )
                     )
                 )
-            )
+            }
         }
-
-        Log.e("datos", "${list.toList()}")
 
         return list.toList()
     }

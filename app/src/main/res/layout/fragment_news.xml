@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.news.NoticeFragment">
+    tools:context=".ui.news.NewsFragment">
 
     <data>
         <import type="java.util.List" />
@@ -79,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
             android:layout_marginBottom="8dp"
             tools:listitem="@layout/news_item"
-            android:id="@+id/repo_list" />
+            android:id="@+id/news_list"/>
 
         <TextView
             android:layout_width="wrap_content"

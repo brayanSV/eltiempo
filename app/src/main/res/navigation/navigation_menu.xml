@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_menu"
-    app:startDestination="@id/noticeFragment">
-
+    app:startDestination="@id/newsFragment">
     <fragment
-        android:id="@+id/noticeFragment"
-        android:name="com.user.brayan.eltiempo.ui.news.NoticeFragment"
-        android:label="fragment_notice"
+        android:id="@+id/newsFragment"
+        android:name="com.user.brayan.eltiempo.ui.news.NewsFragment"
+        android:label="fragment_news"
         tools:layout="@layout/fragment_news" >
         <action
-            android:id="@+id/action_noticeFragment_to_detailsNoticeFragment"
-            app:destination="@id/detailsNoticeFragment" />
+            android:id="@+id/action_newsFragment_to_detailsNewsFragment"
+            app:destination="@id/detailsNewsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/detailsNoticeFragment"
-        android:name="com.user.brayan.eltiempo.ui.detailsnews.DetailsNoticeFragment"
-        android:label="fragment_details_notice"
+        android:id="@+id/detailsNewsFragment"
+        android:name="com.user.brayan.eltiempo.ui.detailsnews.DetailsNewsFragment"
+        android:label="fragment_details_news"
         tools:layout="@layout/fragment_details_news" >
         <action
-            android:id="@+id/action_detailsNoticeFragment_to_noticeFragment"
-            app:destination="@id/noticeFragment" />
+            android:id="@+id/action_detailsNewsFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+        <argument
+            android:name="href_nasaId"
+            app:argType="string" />
     </fragment>
 </navigation>

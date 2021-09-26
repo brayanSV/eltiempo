@@ -29,6 +29,7 @@ class AppModule {
     fun provideDb(app: Application): ConnectionDb {
         return Room.databaseBuilder(app, ConnectionDb::class.java, "connectionDb.db")
             .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
             .build()
     }
 

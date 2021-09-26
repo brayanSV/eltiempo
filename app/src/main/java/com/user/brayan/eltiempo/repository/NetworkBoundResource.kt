@@ -98,9 +98,6 @@ abstract class NetworkBoundResource <ResultType, RequestType>
     @WorkerThread
     protected abstract fun saveCallResult(item: JsonObject)
 
-    @WorkerThread
-    protected abstract fun favorite(favorite: Boolean)
-
     @MainThread
     protected abstract fun createCall(): LiveData<ApiResponse<JsonObject>>?
 }
