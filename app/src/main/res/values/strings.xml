@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">eltiempo</string>
+    <string name="app_name">El Tiempo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="retry">Retry</string>
@@ -7,4 +7,5 @@
     <string name="unknown_error">Unknown Error</string>
     <string name="empty_search_result">No results for <b>%s</b></string>
     <string name="menu_favorite">Favorite</string>
+    <string name="no_information">No information</string>
 </resources>

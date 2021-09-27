@@ -19,12 +19,12 @@ class NewsRepository @Inject constructor(
     private val newsDao: NewsDao,
     private val applicationApi: ApplicationApi
 ) {
-    fun loadDefault(): LiveData<Resource<List<News>>> = object: NetworkBoundResource<List<News>, List<News>>(appExecutors) {
-        override fun loadFromDataBase(): LiveData<List<News>> {
+    fun loadDefault(): LiveData<Resource<MutableList<News>>> = object: NetworkBoundResource<MutableList<News>, MutableList<News>>(appExecutors) {
+        override fun loadFromDataBase(): LiveData<MutableList<News>> {
             return newsDao.loadData()
         }
 
-        override fun shouldFetch(data: List<News>?): Boolean {
+        override fun shouldFetch(data: MutableList<News>?): Boolean {
             return data == null || data.isEmpty()
         }
 
@@ -39,8 +39,8 @@ class NewsRepository @Inject constructor(
 
     }.asLiveData()
 
-    fun search(query: String): LiveData<Resource<List<News>>> = object: NetworkBoundResource<List<News>, List<News>>(appExecutors) {
-        override fun loadFromDataBase(): LiveData<List<News>> {
+    fun search(query: String): LiveData<Resource<MutableList<News>>> = object: NetworkBoundResource<MutableList<News>, MutableList<News>>(appExecutors) {
+        override fun loadFromDataBase(): LiveData<MutableList<News>> {
             return Transformations.switchMap(newsDao.searchData(query)) { searchData ->
                 if (searchData == null) {
                     AbsentLiveData.create()
@@ -50,7 +50,7 @@ class NewsRepository @Inject constructor(
             }
         }
 
-        override fun shouldFetch(data: List<News>?): Boolean {
+        override fun shouldFetch(data: MutableList<News>?): Boolean {
             return data == null || data.isEmpty()
         }
 

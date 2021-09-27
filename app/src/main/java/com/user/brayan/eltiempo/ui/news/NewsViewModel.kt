@@ -1,5 +1,6 @@
 package com.user.brayan.eltiempo.ui.news
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -14,15 +15,15 @@ import javax.inject.Inject
 
 class NewsViewModel @Inject constructor(val repository: NewsRepository): ViewModel() {
     //init news
-    val repositories: LiveData<Resource<List<News>>> = repository.loadDefault()
+    val repositories: LiveData<Resource<MutableList<News>>> = repository.loadDefault()
 
     //search news
     private val query = MutableLiveData<String>()
     val queryLD: LiveData<String> = query
 
-    val result: LiveData<Resource<List<News>>> = Transformations.switchMap(query) { search ->
+    val result: LiveData<Resource<MutableList<News>>> = Transformations.switchMap(query) { search ->
         if (search.isNullOrBlank()) {
-            repositories //aqui deberia hacer el cambio de tap
+            AbsentLiveData.create()
         } else {
             repository.search(search)
         }

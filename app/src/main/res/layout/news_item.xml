@@ -20,49 +20,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
-        app:cardCornerRadius="15sp">
+        app:cardCornerRadius="15sp"
+        app:cardElevation="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:paddingBottom="25sp"
+            android:background="@drawable/round"
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:padding="15sp"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/imageView"
+                imageUrl="@{news.data.photo}"
+                android:layout_width="280sp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
+                android:layout_marginTop="35sp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/ic_launcher" />
 
-                <ImageView
-                    imageUrl="@{news.data.photo}"
-                    android:layout_width="380sp"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/ic_launcher"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{news.data.title}"
+                android:layout_marginTop="15sp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:textColor="@color/title_news_0B5891"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{news.data.title}"
-                    android:layout_marginTop="5sp"/>
-            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/imgFavorite"
                 android:layout_width="35sp"
                 android:layout_height="35sp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginStart="260dp"
+                android:layout_marginTop="16dp"
                 android:background="@android:color/transparent"
                 android:onClick="@{() -> favoriteCallback.favorite()}"
                 android:src="@{favorite ? @android:drawable/star_big_on : @android:drawable/star_big_off}"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

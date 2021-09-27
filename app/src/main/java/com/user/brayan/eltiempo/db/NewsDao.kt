@@ -15,7 +15,7 @@ abstract class NewsDao {
     abstract fun insert(item: List<News>)
 
     @Query("select * from News")
-    abstract fun loadData(): LiveData<List<News>>
+    abstract fun loadData(): LiveData<MutableList<News>>
 
     @Query("update news set href_favorite = :favorite where href_nasaId = :nasa_id ")
     abstract fun updateFavorite(favorite: Boolean, nasa_id: String)
@@ -24,5 +24,5 @@ abstract class NewsDao {
     abstract fun loadDetailData(nasa_id: String): LiveData<News>
 
     @Query("select * from news where `href_keywords` like '%' || :query || '%'")
-    abstract fun searchData(query: String): LiveData<List<News>>
+    abstract fun searchData(query: String): LiveData<MutableList<News>>
 }

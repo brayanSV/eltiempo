@@ -15,62 +15,65 @@
             type="com.user.brayan.eltiempo.ui.common.FavoriteCallback" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp">
+        android:layout_height="match_parent">
 
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@{news.data.title}"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            imageUrl="@{news.data.photo}"
-            android:layout_width="280sp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="@{news.data.title}"
+                android:textSize="18sp"
+                android:textColor="@color/title_news_0B5891"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@{news.data.description}"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            tools:layout_editor_absoluteX="24dp" />
+            <ImageView
+                android:id="@+id/imageView"
+                imageUrl="@{news.data.photo}"
+                android:layout_width="280sp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@{news.data.description}"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                tools:layout_editor_absoluteX="24dp" />
 
 
-        <ImageButton
-            android:id="@+id/imgFavorite"
-            android:layout_width="35sp"
-            android:layout_height="35sp"
-            android:layout_marginTop="20dp"
-            android:background="@android:color/transparent"
-            android:onClick="@{() -> favoriteCallback.favorite()}"
-            android:src="@{news.data.favorite ? @android:drawable/star_big_on : @android:drawable/star_big_off}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageButton
+                android:id="@+id/imgFavorite"
+                android:layout_width="35sp"
+                android:layout_height="35sp"
+                android:layout_marginStart="260dp"
+                android:layout_marginTop="12dp"
+                android:background="@android:color/transparent"
+                android:onClick="@{() -> favoriteCallback.favorite()}"
+                android:src="@{news.data.favorite ? @android:drawable/star_big_on : @android:drawable/star_big_off}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

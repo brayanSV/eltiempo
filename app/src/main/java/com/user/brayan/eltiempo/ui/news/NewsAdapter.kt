@@ -61,8 +61,9 @@ class NewsAdapter (
 
         binding.favoriteCallback = object: FavoriteCallback {
             override fun favorite() {
-                binding.favorite = !item.data.favorite
                 viewModel.favorite(!item.data.favorite, item.data.nasaId)
+                item.data.favorite = !item.data.favorite
+                binding.favorite = item.data.favorite
                 binding.notifyChange()
             }
         }
